@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import createHistory from "history/createBrowserHistory"
+import { QueryStringUtil } from '../util/QueryStringUtil';
 
 class Search extends Component {
   constructor(props) {
@@ -14,12 +14,7 @@ class Search extends Component {
     this.setState({
       selectValue: e.target.value 
     });
-
-    const history = createHistory();
-    history.push({
-      pathname: "/",
-      search: `?state=${e.target.value}`
-    });
+    {QueryStringUtil({type: 'state', value: e.target.value})}
     this.props.fetchIssues();
   }
 
@@ -29,15 +24,11 @@ class Search extends Component {
     });
   }
 
-  onKeyPress = (e) => {
-    const history = createHistory()
-    if(e.keyCode == 13){
-      history.push({
-        pathname: "/",
-        search: `?query=${this.state.inputValue}`
-      });
+  handleKeyPress = (e) => {
+    if(e.key === 'Enter') {
+      {QueryStringUtil({type: 'query', value: this.state.inputValue})}
+      this.props.fetchIssues();
     }
-    this.props.fetchIssues();
   }
   
 

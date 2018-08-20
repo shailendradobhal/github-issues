@@ -34,10 +34,10 @@ class Main extends Component {
   render() {
     const list = this.props.issues;
     const issueDetails = this.props.issueDetails;
-
+    console.log('list', this.props);
     return (
       <div className="container">
-        <Navigation list={list} />
+        <Navigation />
         <Search fetchIssues={this.props.fetchIssues}/>
         <Switch>
           <Route exact path="/" component={() => <IssuesList isLoading={list.isLoading} errMessage={list.errMessage} issues={list.issues} />} />
