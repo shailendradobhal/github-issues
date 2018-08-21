@@ -1,7 +1,7 @@
 import React from 'react';
 import Issue from './Issue';
 
-function IssuesList({isLoading, errMessage, issues, fetchIssues}) {
+function IssuesList({isLoading, errMessage, issues}) {
   if(isLoading) {
     return <div>Loading....</div>
   } else if (errMessage) {

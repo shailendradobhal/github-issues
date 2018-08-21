@@ -49,7 +49,7 @@ export const fetchIssues = (page = 1) => (dispatch) => {
 
 export const fetchIssueDetails = (number) => (dispatch) => {
   dispatch(issueDetailsLoading(true));
-  return axios.get(`https://api.github.com/repos//facebook/react/${number}`)
-  .then(details => dispatch(addIssueDetails(details)))
+  return axios.get(`https://api.github.com/repos/facebook/react/issues/${number}`)
+  .then(details =>  dispatch(addIssueDetails(details)))
   .catch(err => dispatch(issueDetailsFailed(err)))
 }

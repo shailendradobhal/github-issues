@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { ConfigureStore } from './redux/ConfigureStore';
 import Main from './container/Main';
 import IssueDetailPage from './container/IssueDetailPage';
@@ -14,10 +14,11 @@ class App extends Component {
         <Provider store={store}>
           <BrowserRouter>
             <Switch>
-              <Route exact path="/" component={Main} />
-              <Route path=":issueId" component={IssueDetailPage} />
+              <Route exact path="/issues/" component={Main} />
+              <Route path="/issues/:issueId" component={IssueDetailPage} />
+              <Redirect to="/issues/" />
             </Switch>
-          </BrowserRouter>  
+          </BrowserRouter>
         </Provider>
       </div>
     );

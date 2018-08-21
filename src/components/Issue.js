@@ -6,7 +6,7 @@ function Issue(props) {
   return (
     <li className="list-group-item d-flex justify-content-between align-items-center">
       <div>
-      <Link to={`/${issue.number}`}>
+      <Link to={`/issues/${issue.number}`}>
         <div className="d-flex w-100 justify-content-between">
           <h5 className="mb-1">{issue.title}</h5>
         </div>

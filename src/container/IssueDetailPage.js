@@ -19,18 +19,16 @@ const mapDispatchToProps = dispatch => {
 class IssueDetailPage extends Component {
   constructor(props) {
     super(props);
-    alert(1);
   }
 
   componentDidMount() {
-    alert(1);
     this.props.fetchIssueDetails(this.props.match.params.issueId);
   }
 
   render() {
     const issueDetails = this.props.issueDetails;
     return (
-      <IssueDetails fetchIssueDetails={this.props.fetchIssueDetails} errMessage=  {issueDetails.errMessage} isLoading={issueDetails.isLoading}  issueDetails={issueDetails.issueDetails} />
+      <IssueDetails fetchIssueDetails={this.props.fetchIssueDetails} errMessage=  {issueDetails.errMessage} isLoading={issueDetails.isLoading}  issueDetails={issueDetails.issueDetails.data} />
     );
   }
 }
