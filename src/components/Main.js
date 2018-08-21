@@ -36,7 +36,8 @@ class Main extends Component {
   }
 
   handlePageChange = (data) => {
-    QueryStringUtil({ type: 'page', value: data.selected + 1 });
+    console.log('data: ', data);
+    QueryStringUtil({ type: 'page', value: Number(data.selected) + 1});
     this.props.fetchIssues();
   }
 
@@ -53,7 +54,7 @@ class Main extends Component {
         </Switch>
         <nav>
           <Paginate
-            forcePage={queryString.parse(window.location.search).page || 1}
+            forcePage={Number(queryString.parse(window.location.search).page - 1) || 0}
             pageCount={this.props.pageCount}
             marginPagesDisplayed={2}
             pageRangeDisplayed={5}
