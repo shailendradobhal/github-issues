@@ -53,7 +53,7 @@ class Main extends Component {
         </Switch>
         <nav>
           <Paginate
-            forcePage={queryString.parse(window.location.search).page}
+            forcePage={queryString.parse(window.location.search).page || 1}
             pageCount={this.props.pageCount}
             marginPagesDisplayed={2}
             pageRangeDisplayed={5}
