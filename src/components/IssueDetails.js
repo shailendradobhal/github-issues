@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 class IssueDetails extends Component {
 
   componentDidMount() {
-    console.log(this.props.isLoading);
     this.props.fetchIssueDetails(this.props.match.params.issueId);
   }
 

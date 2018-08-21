@@ -1,5 +1,7 @@
 import * as ActionTypes from './ActionTypes';
 import axios from 'axios';
+import parseLink from 'parse-link-header'; 
+import { getPageCount } from '../util/commonUtils';
 
 export const issuesLoading = () => ({
   type: ActionTypes.FETCH_ISSUES_REQUEST
@@ -10,9 +12,13 @@ export const issuesFailed = (errMessage) => ({
   payload: errMessage
 });
 
-export const addIssues = (issues) => ({
+export const addIssues = (issues, pageLinks, pageCount) => ({
   type: ActionTypes.FETCH_ISSUES_SUCCESS,
-  payload: issues
+  payload: {
+    issues: issues,
+    pageLinks: pageLinks,
+    pageCount: pageCount
+  }
 });
 
 export const issueDetailsLoading = () => ({
@@ -33,7 +39,11 @@ export const fetchIssues = (page = 1) => (dispatch) => {
   dispatch(issuesLoading(true));
   const term = window.location.search.slice(1);
   return axios.get(`https://api.github.com/repos/facebook/react/issues?page=${page}&per_page=25&${term}`)
-  .then(issues => dispatch(addIssues(issues)))
+  .then(issues => {
+    const pageLinks = parseLink(issues.headers.link);
+    const pageCount = getPageCount(pageLinks);
+    dispatch(addIssues(issues, pageLinks, pageCount));
+  })
   .catch(err => dispatch(issuesFailed(err)))
 }
 
