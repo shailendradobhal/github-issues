@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
-import IssuesList from './IssuesList';
-import IssueDetails from './IssueDetails';
-import { withRouter, Switch, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
-import Navigation from './Navigation';
-import Search from './Search';
-import queryString from 'query-string';
-import { fetchIssues, fetchIssueDetails } from '../redux/ActionCreators';
 import Paginate from 'react-paginate';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import queryString from 'query-string';
+import Navigation from '../components/Navigation';
+import Search from '../components/Search';
+import { fetchIssues } from '../redux/ActionCreators';
 import { QueryStringUtil } from '../util/QueryStringUtil';
+import IssuesList from '../components/IssuesList';
 
 const mapStateToProps = state => {
   return {
     issues: state.issues,
-    issueDetails: state.issueDetails,
     pageCount: state.pageCount,
     pageLinks: state.pageLinks
   };
@@ -21,37 +19,28 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchIssues: () => { dispatch(fetchIssues()) },
-    fetchIssueDetails: (number) => { dispatch(fetchIssueDetails(number)) }
+    fetchIssues: () => { dispatch(fetchIssues()) }
   }
 }
 
 class Main extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     this.props.fetchIssues();
   }
 
   handlePageChange = (data) => {
-    console.log('data: ', data);
     QueryStringUtil({ type: 'page', value: Number(data.selected) + 1});
     this.props.fetchIssues();
   }
 
   render() {
     const list = this.props.issues;
-    const issueDetails = this.props.issueDetails;
     return (
       <div className="container">
         <Navigation />
         <Search fetchIssues={this.props.fetchIssues}/>
-        <Switch>
-          <Route exact path="/" component={() => <IssuesList isLoading={list.isLoading} errMessage={list.errMessage} issues={list.issues} />} />
-          <Route path="/:issueId" component={(props) => <IssueDetails fetchIssueDetails={this.props.fetchIssueDetails} errMessage={issueDetails.errMessage} isLoading={issueDetails.isLoading}  issueDetails={issueDetails.issueDetails} {...props} />} />
-        </Switch>
+        <IssuesList isLoading={list.isLoading} errMessage={list.errMessage} issues={list.issues} />
         <nav>
           <Paginate
             forcePage={Number(queryString.parse(window.location.search).page - 1) || 0}

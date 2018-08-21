@@ -2,10 +2,6 @@ import React, {Component} from 'react';
 
 class IssueDetails extends Component {
 
-  componentDidMount() {
-    this.props.fetchIssueDetails(this.props.match.params.issueId);
-  }
-
   render() {
     const { isLoading, errMessage, issueDetails } = this.props;
     if(isLoading) {
