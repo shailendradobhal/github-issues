@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-function Issue(props) {
-  const issue = props.issue;
+function Issue({ issue }) {
   return (
     <li className="list-group-item d-flex justify-content-between align-items-center">
       <div>
@@ -16,6 +16,17 @@ function Issue(props) {
       <span className="badge badge-primary badge-pill">{issue.comments}</span> 
     </li>
   );
+}
+
+Issue.propTypes = {
+  issue: PropTypes.shape({
+    number: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    user: PropTypes.shape({
+      login: PropTypes.string.isRequired
+    }).isRequired,
+    comments: PropTypes.number.isRequired
+  }).isRequired
 }
 
 export default Issue;

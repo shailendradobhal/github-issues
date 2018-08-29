@@ -1,7 +1,9 @@
 import React from 'react';
 import Issue from './Issue';
+import PropTypes from 'prop-types';
 
 function IssuesList({isLoading, errMessage, issues}) {
+  console.log(issues);
   if(isLoading) {
     return <div>Loading....</div>
   } else if (errMessage) {
@@ -15,6 +17,16 @@ function IssuesList({isLoading, errMessage, issues}) {
       </div>
     );
   } 
+}
+
+IssuesList.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  errMessage: PropTypes.shape({
+    message: PropTypes.string
+  }),
+  issue: PropTypes.oneOfType([PropTypes.shape({
+    data: PropTypes.arrayOf(PropTypes.object)
+  }), PropTypes.array])
 }
 
 export default IssuesList;
